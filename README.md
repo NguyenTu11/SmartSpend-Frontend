@@ -4,7 +4,6 @@
 
 ## 📸 Screenshots
 
-<!-- Thêm ảnh giao diện vào đây -->
 | Trang chủ | Dashboard | Giao dịch |
 |:---------:|:---------:|:---------:|
 | ![Landing](screenshots/landing.png) | ![Dashboard](screenshots/dashboard.png) | ![Transactions](screenshots/transactions.png) |
@@ -41,7 +40,7 @@
 
 ### Bước 1: Clone repo
 ```bash
-git clone https://github.com/YOUR_USERNAME/smartspend-frontend.git
+git clone https://github.com/NguyenTu11/SmartSpend-Frontend.git
 cd smartspend-frontend
 ```
 
@@ -82,7 +81,7 @@ src/
 ## 🔗 Backend
 
 Ứng dụng này cần backend để hoạt động. Xem repo backend tại:
-- [SmartSpend-Backend](https://github.com/YOUR_USERNAME/SmartSpend-Backend)
+- [SmartSpend-Backend](https://github.com/NguyenTu11/SmartSpend-Backend.git)
 
 ## 📝 License
 
@@ -90,4 +89,4 @@ MIT License - Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
 
 ---
 
-Made with ❤️ by [Your Name]
+Made with ❤️ by [NguyenTu11]
