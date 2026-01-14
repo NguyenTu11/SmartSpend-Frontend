@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, Suspense } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
@@ -29,7 +29,7 @@ declare global {
     }
 }
 
-function AuthPageContent() {
+export default function AuthPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const [isLogin, setIsLogin] = useState(true)
@@ -338,13 +338,5 @@ function AuthPageContent() {
             </div>
 
         </div>
-    )
-}
-
-export default function AuthPage() {
-    return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"><div className="text-white">Loading...</div></div>}>
-            <AuthPageContent />
-        </Suspense>
     )
 }
