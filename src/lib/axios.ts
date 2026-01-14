@@ -4,7 +4,7 @@ import { ENV } from "./env"
 export const api = axios.create({
     baseURL: ENV.API_URL,
     withCredentials: true,
-    timeout: 60000,
+    timeout: 120000,
 })
 
 api.interceptors.request.use(
