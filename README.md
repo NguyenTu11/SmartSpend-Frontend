@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VIMO - Smart Finance Management
 
-## Getting Started
+> Ứng dụng quản lý tài chính cá nhân thông minh với AI
 
-First, run the development server:
+## 📸 Screenshots
 
+<!-- Thêm ảnh giao diện vào đây -->
+| Trang chủ | Dashboard | Giao dịch |
+|:---------:|:---------:|:---------:|
+| ![Landing](screenshots/landing.png) | ![Dashboard](screenshots/dashboard.png) | ![Transactions](screenshots/transactions.png) |
+
+| Ngân sách | Phân tích | AI Chat |
+|:---------:|:---------:|:-------:|
+| ![Budgets](screenshots/budgets.png) | ![Analytics](screenshots/analytics.png) | ![Chat](screenshots/chat.png) |
+
+## ✨ Tính năng
+
+- 🔐 **Xác thực**: Đăng nhập/Đăng ký, Google OAuth, Quên mật khẩu
+- 💰 **Quản lý giao dịch**: Thu/Chi, Tìm kiếm, Lọc theo danh mục
+- 📊 **Ngân sách**: Thiết lập giới hạn, Cảnh báo vượt ngân sách
+- 📈 **Phân tích**: Biểu đồ chi tiêu theo ngày/tháng/năm
+- 🤖 **AI Chat**: Tư vấn tài chính thông minh với GPT
+- 🔔 **Thông báo**: Real-time với Socket.IO
+- 🔍 **Tìm kiếm**: Tìm giao dịch nhanh từ header
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: TanStack Query (React Query)
+- **Real-time**: Socket.IO Client
+- **Icons**: Lucide React
+- **HTTP Client**: Axios
+
+## 🚀 Cài đặt
+
+### Yêu cầu
+- Node.js 18+
+- npm hoặc yarn
+
+### Bước 1: Clone repo
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/YOUR_USERNAME/smartspend-frontend.git
+cd smartspend-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Bước 2: Cài đặt dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Bước 3: Tạo file .env
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_SOCKET_URL=http://localhost:8000
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Bước 4: Chạy development server
+```bash
+npm run dev
+```
 
-## Learn More
+Mở [http://localhost:3000](http://localhost:3000) để xem ứng dụng.
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Cấu trúc thư mục
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/                    # App Router pages
+│   ├── auth/              # Trang xác thực
+│   ├── dashboard/         # Trang dashboard
+│   └── page.tsx           # Landing page
+├── components/            # React components
+├── hooks/                 # Custom React hooks
+├── services/              # API services
+├── types/                 # TypeScript types
+└── lib/                   # Utilities
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔗 Backend
 
-## Deploy on Vercel
+Ứng dụng này cần backend để hoạt động. Xem repo backend tại:
+- [SmartSpend-Backend](https://github.com/YOUR_USERNAME/SmartSpend-Backend)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License - Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+
+---
+
+Made with ❤️ by [Your Name]
