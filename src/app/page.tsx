@@ -46,7 +46,7 @@ export default function HomePage() {
                             </span>
                         </Link>
                         <Link
-                            href="/auth/login?mode=register"
+                            href="/auth/register"
                             className="group relative w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-transparent text-white text-base sm:text-lg font-bold rounded-2xl border-2 border-white/30 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:border-white/60 hover:bg-white/10 hover:shadow-2xl hover:shadow-cyan-500/20"
                         >
                             <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 btn-shimmer opacity-0 group-hover:opacity-20"></span>

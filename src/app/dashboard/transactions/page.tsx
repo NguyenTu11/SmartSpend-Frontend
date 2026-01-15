@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useMemo } from "react"
+import { useRouter } from "next/navigation"
 import { Plus, ArrowUpRight, ArrowDownRight, Edit, Trash2, Camera, Download, ChevronLeft, ChevronRight, Filter } from "lucide-react"
 import {
     useTransactions,
@@ -21,10 +22,12 @@ import { showToast } from "@/components/Toast"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { Transaction, TransactionPayload } from "@/types/transaction"
 import { formatCurrency, formatDate, cn } from "@/lib/utils"
+import { getCategoryIcon } from "@/lib/categoryIcons"
 
 const ITEMS_PER_PAGE = 10
 
 export default function TransactionsPage() {
+    const router = useRouter()
     const [showModal, setShowModal] = useState(false)
     const [showOcrModal, setShowOcrModal] = useState(false)
     const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null)
@@ -82,6 +85,11 @@ export default function TransactionsPage() {
     }
 
     const openCreateModal = () => {
+        if (!wallets || wallets.length === 0) {
+            showToast("Vui lòng tạo ví trước khi thêm giao dịch", "error")
+            router.push("/dashboard/settings")
+            return
+        }
         resetForm()
         setShowModal(true)
     }
@@ -199,7 +207,14 @@ export default function TransactionsPage() {
                     <p className="text-sm text-gray-500">{filteredTransactions.length} giao dịch</p>
                 </div>
                 <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => setShowOcrModal(true)} leftIcon={<Camera className="w-4 h-4" />}>
+                    <Button size="sm" variant="outline" onClick={() => {
+                        if (!wallets || wallets.length === 0) {
+                            showToast("Vui lòng tạo ví trước khi thêm giao dịch", "error")
+                            router.push("/dashboard/settings")
+                            return
+                        }
+                        setShowOcrModal(true)
+                    }} leftIcon={<Camera className="w-4 h-4" />}>
                         Quét
                     </Button>
                     <Button size="sm" onClick={openCreateModal} leftIcon={<Plus className="w-4 h-4" />}>
@@ -255,16 +270,21 @@ export default function TransactionsPage() {
                         {paginatedTransactions.map((tx) => (
                             <div key={tx._id} className="flex items-center justify-between p-3 hover:bg-gray-50 transition-colors">
                                 <div className="flex items-center gap-3">
-                                    <div className={cn(
-                                        "w-10 h-10 rounded-xl flex items-center justify-center",
-                                        tx.type === "income" ? "bg-green-100" : "bg-red-100"
-                                    )}>
-                                        {tx.type === "income" ? (
-                                            <ArrowUpRight className="w-5 h-5 text-green-600" />
-                                        ) : (
-                                            <ArrowDownRight className="w-5 h-5 text-red-600" />
-                                        )}
-                                    </div>
+                                    {(() => {
+                                        const categoryName = typeof tx.categoryId === "object" ? tx.categoryId.name : ""
+                                        const CategoryIcon = getCategoryIcon(categoryName)
+                                        return (
+                                            <div className={cn(
+                                                "w-10 h-10 rounded-xl flex items-center justify-center",
+                                                tx.type === "income" ? "bg-green-100" : "bg-red-100"
+                                            )}>
+                                                <CategoryIcon className={cn(
+                                                    "w-5 h-5",
+                                                    tx.type === "income" ? "text-green-600" : "text-red-600"
+                                                )} />
+                                            </div>
+                                        )
+                                    })()}
                                     <div>
                                         <p className="font-medium text-gray-900">
                                             {typeof tx.categoryId === "object" ? tx.categoryId.name : "Không xác định"}

@@ -1,14 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { AuthForm } from "@/components/AuthForm"
 
 export default function RegisterPage() {
-    const router = useRouter()
-
-    useEffect(() => {
-        router.replace("/auth/login")
-    }, [router])
-
-    return null
+    return <AuthForm initialMode="register" />
 }

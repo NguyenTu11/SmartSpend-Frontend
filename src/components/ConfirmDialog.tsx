@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { createPortal } from "react-dom"
 import { AlertTriangle } from "lucide-react"
 import { Button } from "@/components/Button"
 
@@ -43,18 +44,18 @@ export function ConfirmDialog({
 
     if (!isOpen) return null
 
-    return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+    const dialogContent = (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
             <div
-                className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm"
                 onClick={() => !isLoading && onClose()}
             />
             <div
                 ref={dialogRef}
-                className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm mx-4 p-6 animate-scale-in"
+                className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 animate-in fade-in zoom-in-95 duration-200"
             >
                 <div className="flex flex-col items-center text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-rose-600 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-red-500/30 animate-pulse-slow">
+                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-rose-600 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-red-500/30">
                         <AlertTriangle className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
@@ -73,7 +74,7 @@ export function ConfirmDialog({
                             type="button"
                             onClick={onConfirm}
                             disabled={isLoading}
-                            className="flex-1 py-2.5 px-4 bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-rose-700 transition-all duration-300 disabled:opacity-50 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 hover:scale-[1.02] active:scale-[0.98]"
+                            className="flex-1 py-2.5 px-4 bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-rose-700 transition-all duration-300 disabled:opacity-50 shadow-lg shadow-red-500/25"
                         >
                             {isLoading ? (
                                 <span className="flex items-center justify-center gap-2">
@@ -88,36 +89,10 @@ export function ConfirmDialog({
                     </div>
                 </div>
             </div>
-
-            <style jsx>{`
-                @keyframes fade-in {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                @keyframes scale-in {
-                    from { 
-                        opacity: 0;
-                        transform: scale(0.9) translateY(-10px);
-                    }
-                    to { 
-                        opacity: 1;
-                        transform: scale(1) translateY(0);
-                    }
-                }
-                @keyframes pulse-slow {
-                    0%, 100% { transform: scale(1); }
-                    50% { transform: scale(1.05); }
-                }
-                .animate-fade-in {
-                    animation: fade-in 0.2s ease-out;
-                }
-                .animate-scale-in {
-                    animation: scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-                }
-                .animate-pulse-slow {
-                    animation: pulse-slow 2s ease-in-out infinite;
-                }
-            `}</style>
         </div>
     )
+
+    if (typeof window === "undefined") return null
+
+    return createPortal(dialogContent, document.body)
 }

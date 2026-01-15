@@ -13,6 +13,7 @@ import { showToast } from "@/components/Toast"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { Budget, BudgetPayload } from "@/types/budget"
 import { formatCurrency, cn } from "@/lib/utils"
+import { getCategoryIcon } from "@/lib/categoryIcons"
 
 export default function BudgetsPage() {
     const [showModal, setShowModal] = useState(false)
@@ -167,17 +168,22 @@ export default function BudgetsPage() {
                         >
                             <div className="flex items-start justify-between mb-3">
                                 <div className="flex items-center gap-3">
-                                    <div className={cn(
-                                        "w-10 h-10 rounded-xl flex items-center justify-center",
-                                        budget.status === "EXCEEDED" ? "bg-red-100" :
-                                            budget.status === "WARNING" ? "bg-yellow-100" : "bg-green-100"
-                                    )}>
-                                        <Target className={cn(
-                                            "w-5 h-5",
-                                            budget.status === "EXCEEDED" ? "text-red-600" :
-                                                budget.status === "WARNING" ? "text-yellow-600" : "text-green-600"
-                                        )} />
-                                    </div>
+                                    {(() => {
+                                        const CategoryIcon = getCategoryIcon(budget.categoryName)
+                                        return (
+                                            <div className={cn(
+                                                "w-10 h-10 rounded-xl flex items-center justify-center",
+                                                budget.status === "EXCEEDED" ? "bg-red-100" :
+                                                    budget.status === "WARNING" ? "bg-yellow-100" : "bg-green-100"
+                                            )}>
+                                                <CategoryIcon className={cn(
+                                                    "w-5 h-5",
+                                                    budget.status === "EXCEEDED" ? "text-red-600" :
+                                                        budget.status === "WARNING" ? "text-yellow-600" : "text-green-600"
+                                                )} />
+                                            </div>
+                                        )
+                                    })()}
                                     <div>
                                         <p className="font-medium text-gray-900">{budget.categoryName}</p>
                                         <p className="text-xs text-gray-500">
