@@ -18,6 +18,9 @@ export const authService = {
     verifyEmail: (data: VerifyEmailPayload) =>
         api.post<MessageResponse>("/auth/verify-email", data),
 
+    resendVerification: (email: string) =>
+        api.post<MessageResponse>("/auth/resend-verification", { email }),
+
     forgotPassword: (email: string) =>
         api.post<MessageResponse>("/auth/forgot-password", { email }),
 

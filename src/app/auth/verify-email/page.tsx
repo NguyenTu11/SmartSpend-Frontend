@@ -7,6 +7,7 @@ import { AxiosError } from "axios"
 import { Mail } from "lucide-react"
 import { useVerifyEmail } from "@/hooks/useAuth"
 import { Button } from "@/components/Button"
+import { authService } from "@/services/authService"
 
 export default function VerifyEmailPage() {
     const { mutate: verifyEmail, isPending, error, isSuccess } = useVerifyEmail()
@@ -75,8 +76,27 @@ export default function VerifyEmailPage() {
         }
     }
 
+    const [resendLoading, setResendLoading] = useState(false)
+    const [resendMessage, setResendMessage] = useState("")
+
+    const handleResend = async () => {
+        if (!email || resendLoading) return
+        setResendLoading(true)
+        setResendMessage("")
+        try {
+            const res = await authService.resendVerification(email)
+            setResendMessage(res.data.message)
+        } catch (err) {
+            const axiosErr = err as AxiosError<{ message: string }>
+            setResendMessage(axiosErr.response?.data?.message || "Gửi lại mã thất bại")
+        } finally {
+            setResendLoading(false)
+        }
+    }
+
     const axiosError = error as AxiosError<{ message: string }> | null
     const errorMessage = axiosError?.response?.data?.message || (error ? "Xác thực thất bại" : "")
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden px-4">
@@ -116,17 +136,17 @@ export default function VerifyEmailPage() {
                         <p className="text-violet-400 font-medium">{email || "email của bạn"}</p>
                     </div>
 
-                    {isSuccess && (
+                    {(isSuccess || (resendMessage && !resendMessage.includes("thất bại"))) && (
                         <div className="mb-4 p-3 bg-green-500/20 border border-green-500/30 rounded-xl">
                             <p className="text-sm text-green-300 text-center">
-                                Xác thực thành công! Đang chuyển hướng...
+                                {isSuccess ? "Xác thực thành công! Đang chuyển hướng..." : resendMessage}
                             </p>
                         </div>
                     )}
 
-                    {errorMessage && (
+                    {(errorMessage || (resendMessage && resendMessage.includes("thất bại"))) && (
                         <div className="mb-4 p-3 bg-red-500/20 border border-red-500/30 rounded-xl">
-                            <p className="text-sm text-red-300 text-center">{errorMessage}</p>
+                            <p className="text-sm text-red-300 text-center">{errorMessage || resendMessage}</p>
                         </div>
                     )}
 
@@ -163,8 +183,13 @@ export default function VerifyEmailPage() {
                     <div className="mt-6 text-center space-y-3">
                         <p className="text-gray-400 text-sm">
                             Không nhận được mã?{" "}
-                            <button type="button" className="text-violet-400 font-medium hover:text-violet-300 transition-colors">
-                                Gửi lại
+                            <button
+                                type="button"
+                                onClick={handleResend}
+                                disabled={resendLoading}
+                                className="text-violet-400 font-medium hover:text-violet-300 transition-colors disabled:opacity-50"
+                            >
+                                {resendLoading ? "Đang gửi..." : "Gửi lại"}
                             </button>
                         </p>
                         <Link href="/auth/login" className="block text-gray-400 text-sm hover:text-white transition-colors">
