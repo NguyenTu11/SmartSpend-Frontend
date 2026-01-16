@@ -23,6 +23,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { Transaction, TransactionPayload } from "@/types/transaction"
 import { formatCurrency, formatDate, cn } from "@/lib/utils"
 import { getCategoryIcon } from "@/lib/categoryIcons"
+import { CurrencyInput } from "@/components/CurrencyInput"
 
 const ITEMS_PER_PAGE = 10
 
@@ -374,16 +375,13 @@ export default function TransactionsPage() {
                             Thu nhập
                         </button>
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Số tiền</label>
-                        <Input
-                            type="number"
-                            value={formData.amount || ""}
-                            onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
-                            placeholder="0"
-                            required
-                        />
-                    </div>
+                    <CurrencyInput
+                        label="Số tiền"
+                        value={formData.amount}
+                        onChange={(value) => setFormData({ ...formData, amount: value })}
+                        placeholder="0"
+                        required
+                    />
                     <div className="grid grid-cols-2 gap-3">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Ví</label>

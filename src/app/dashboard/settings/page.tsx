@@ -17,6 +17,7 @@ import { User, FinancialScoreResponse } from "@/types/user"
 import { Wallet } from "@/types/wallet"
 import { Category } from "@/types/category"
 import { formatCurrency } from "@/lib/utils"
+import { CurrencyInput } from "@/components/CurrencyInput"
 
 export default function SettingsPage() {
     const { data: user, isLoading: userLoading } = useProfile()
@@ -348,11 +349,10 @@ function WalletsSection() {
                         placeholder="Ví tiền mặt"
                         required
                     />
-                    <Input
+                    <CurrencyInput
                         label="Số dư ban đầu"
-                        type="number"
-                        value={formData.balance || ""}
-                        onChange={(e) => setFormData({ ...formData, balance: Number(e.target.value) })}
+                        value={formData.balance}
+                        onChange={(value) => setFormData({ ...formData, balance: value })}
                         placeholder="0"
                     />
                     <div className="flex gap-3 pt-2">

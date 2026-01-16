@@ -51,3 +51,14 @@ export const formatRelativeTime = (date: string | Date): string => {
 export const cn = (...classes: (string | boolean | undefined | null)[]): string => {
     return classes.filter(Boolean).join(" ")
 }
+
+export const formatNumberWithDots = (value: string | number): string => {
+    const stringValue = value.toString().replace(/\D/g, "")
+    if (!stringValue) return ""
+    return stringValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+}
+
+export const parseFormattedNumber = (value: string): number => {
+    const cleaned = value.replace(/\./g, "")
+    return cleaned ? parseInt(cleaned, 10) : 0
+}

@@ -14,6 +14,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { Budget, BudgetPayload } from "@/types/budget"
 import { formatCurrency, cn } from "@/lib/utils"
 import { getCategoryIcon } from "@/lib/categoryIcons"
+import { CurrencyInput } from "@/components/CurrencyInput"
 
 export default function BudgetsPage() {
     const [showModal, setShowModal] = useState(false)
@@ -253,16 +254,13 @@ export default function BudgetsPage() {
                             ))}
                         </Select>
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Hạn mức (VND)</label>
-                        <Input
-                            type="number"
-                            value={formData.limit || ""}
-                            onChange={(e) => setFormData({ ...formData, limit: Number(e.target.value) })}
-                            placeholder="1000000"
-                            required
-                        />
-                    </div>
+                    <CurrencyInput
+                        label="Hạn mức (VND)"
+                        value={formData.limit}
+                        onChange={(value) => setFormData({ ...formData, limit: value })}
+                        placeholder="0"
+                        required
+                    />
                     <div className="grid grid-cols-2 gap-3">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Từ ngày</label>
